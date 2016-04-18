@@ -24,16 +24,16 @@
 	<!-- See http://docs.jboss.org/hibernate/stable/core/api/index.html?org/hibernate/Session.html -->
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
 				 p:dataSource-ref="dataSource"
-				 p:configLocation="${hibernate.config}"
+				 p:configLocation="/WEB-INF/hibernate.cfg.xml"
 				 p:packagesToScan="org.krams.tutorial"/>
 	
 	<!-- Declare a datasource that has pooling capabilities-->	 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 				destroy-method="close"
-				p:driverClass="${app.jdbc.driverClassName}"
-				p:jdbcUrl="${app.jdbc.url}"
-				p:user="${app.jdbc.username}"
-				p:password="${app.jdbc.password}"
+				p:driverClass="org.postgresql.Driver"
+				p:jdbcUrl="jdbc:postgresql://localhost:5432/WorkWithHibernate"
+				p:user="postgres"
+				p:password="123456"
 				p:acquireIncrement="5"
 				p:idleConnectionTestPeriod="60"
 				p:maxPoolSize="100"

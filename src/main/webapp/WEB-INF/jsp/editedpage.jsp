@@ -11,7 +11,6 @@
 <body>
 
 <h1>Persons</h1>
-
 <p>You have edited a person with id ${id} at <%= new java.util.Date() %></p>
 
 <c:url var="mainUrl" value="/krams/main/persons" />

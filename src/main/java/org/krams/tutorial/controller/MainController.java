@@ -2,6 +2,8 @@ package org.krams.tutorial.controller;
 
 import org.apache.log4j.Logger;
 import org.krams.tutorial.domain.Person;
+import org.krams.tutorial.domain.Registration;
+import org.krams.tutorial.service.PeopleService;
 import org.krams.tutorial.service.PersonService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +26,7 @@ public class MainController {
 
     protected static Logger logger = Logger.getLogger("controller");
 
-    @Resource(name="personService")
+    @Resource(name ="personService")
     private PersonService personService;
 
     /**
@@ -40,7 +42,8 @@ public class MainController {
         // Retrieve all persons by delegating the call to PersonService
         // Получает всех персон вызовом PersonService
         List<Person> persons = personService.getAll();
-
+        // Person p=personService.get(1);
+        // persons.add(p);
         // Attach persons to the Model
         // Прикрепляет персон к модели
         model.addAttribute("persons", persons);
@@ -49,6 +52,67 @@ public class MainController {
         // Перенаправляет на /WEB-INF/jsp/personspage.jsp
         return "personspage";
     }
+    //добавить страницу логина
+    @RequestMapping(value = "/people_value", method = RequestMethod.GET)
+    public String getPeople(Model model) {
+        return "login_page";
+    }
+
+    //при входе на стр пользователя
+
+    @Resource(name ="peopleService")
+    private PeopleService peopleService;
+    @RequestMapping(value = "/people_value/people", method = RequestMethod.GET)
+    public String login(Model model) {
+        List<Registration> people_value = peopleService.getAll();
+        model.addAttribute("people_value", people_value);
+        return "people_page";
+    }
+
+    @RequestMapping(value = "/people_value/reg", method = RequestMethod.GET)
+    public String getReg(Model model) {
+        model.addAttribute("peopleAttribute", new Registration());
+        return "reg_page";
+    }
+
+    @RequestMapping(value = "/people_value/reg", method = RequestMethod.POST)
+    public String reg(@ModelAttribute("peopleAttribute") Registration registration, Model model) {
+        peopleService.reg(registration);
+        model.addAttribute("people",registration);
+        return "one_person_page";
+    }
+
+
+
+//    @RequestMapping(value = "/people_value/delete", method = RequestMethod.GET)
+//    public String deleteFriend(@RequestParam(value="id", required=true) Integer id, Model model) {
+//        peopleService.deleteFriend(id);
+//        model.addAttribute("id", id);
+//        return "one_person_page";
+//    }
+//
+//    /**
+//     * Retrieves the edit page
+//     *
+//     * @return the name of the JSP page
+//     */
+//    @RequestMapping(value = "/people_value/edit", method = RequestMethod.GET)
+//    public String getEdit(@RequestParam(value="id", required=true) Integer id,
+//                          Model model) {
+//        model.addAttribute("peopleAttribute", peopleService.get(id));
+//        return "one_person_page";
+//    }
+//
+//    @RequestMapping(value = "/people_value/edit", method = RequestMethod.POST)
+//    public String saveEdit(@ModelAttribute("peopleAttribute") Registration registration,
+//                           @RequestParam(value="id", required=true) Integer id,
+//                           Model model) {
+//
+//        registration.setId(id);
+//        peopleService.edit(registration);
+//        model.addAttribute("id", id);
+//        return "one_persn_page";
+//    }
 
     /**
      * Retrieves the add page

@@ -29,7 +29,7 @@ public class PersonService {
      * Получает лист всех персон
      * @return a list of persons
      */
-    public List getAll() {
+    public List<Person> getAll() {
         logger.debug("Retrieving all persons");
 
         // Retrieve session from Hibernate
@@ -38,7 +38,7 @@ public class PersonService {
 
         // Create a Hibernate query (HQL)
         // Создаем запрос
-        Query query = session.createQuery("FROM  PERSON");
+        Query query = session.createQuery("FROM  Person ");
 
         // Retrieve all
         // получаем всех
